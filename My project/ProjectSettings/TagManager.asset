@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Enemy
+  - GM
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Fondo
+  - Wall
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1033129641
+    locked: 0
+  - name: Background 2
+    uniqueID: 2167236909
+    locked: 0
+  - name: FinishLine
+    uniqueID: 604403267
+    locked: 0
+  - name: Platforms
+    uniqueID: 1329016095
+    locked: 0
+  - name: Curves
+    uniqueID: 177083725
+    locked: 0
+  - name: Player
+    uniqueID: 2573377961
+    locked: 0
+  - name: Enemy
+    uniqueID: 978713999
+    locked: 0
+  - name: Coleccionables
+    uniqueID: 434644563
+    locked: 0
