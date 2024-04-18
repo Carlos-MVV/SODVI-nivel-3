@@ -5,6 +5,7 @@ using UnityEngine;
 public class ParallaxBackground : MonoBehaviour
 {
     public ParallaxCamera parallaxCamera;
+    public float parallaxSpeed = 1.5f;
     List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
 
     void Start()
@@ -38,7 +39,7 @@ public class ParallaxBackground : MonoBehaviour
     {
         foreach (ParallaxLayer layer in parallaxLayers)
         {
-            layer.Move(delta);
+            layer.Move(delta * parallaxSpeed);
         }
     }
 }
