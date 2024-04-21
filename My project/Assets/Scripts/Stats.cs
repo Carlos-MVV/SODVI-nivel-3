@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Stats : MonoBehaviour
 {
-    public int health = 3;
+    public int health = 5;
     private GameMaster gm;
 
     void Start()

@@ -6,8 +6,6 @@ public class Checkpoint : MonoBehaviour
 {
     private GameMaster gm;
 
-
-
     void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
@@ -16,7 +14,6 @@ public class Checkpoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            //Manda la posición del jugador al GameMaster
             gm.lastCheckPointPos = transform.position;
         }
     }

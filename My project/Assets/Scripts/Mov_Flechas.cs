@@ -40,6 +40,11 @@ public class Mov_Flechas : MonoBehaviour
 
     private Movimientos movimientos;
 
+    //Animacion
+    [SerializeField] Animator animator;
+    //Sonido
+    [SerializeField] PlayerSoundEffects sonidoCode;
+
 
     private void Awake()
     {
@@ -107,31 +112,47 @@ public class Mov_Flechas : MonoBehaviour
     {
         if (Frenar)
         {
+            animator.enabled = true;
+            animator.SetBool("isStoping", true);
+            Debug.Log("Frenando");
+
+            // Mathf.Lerp: Esta función suaviza la transición entre la velocidad actual y cero, con la velocidad de frenado definida por suavizadoDesplazamiento
             desplazamientoDer = Mathf.Lerp(desplazamientoDer, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
+            DesplazarDerecha = false;
+            Debug.Log("DETENIDO DER");
+            animator.SetBool("isStoping", false);
+
             desplazamientoIzq = Mathf.Lerp(desplazamientoIzq, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
+            DesplazarIzquierda = false;
+            Debug.Log("DETENIDO IZ");
+            animator.SetBool("isStoping", false);
+
             Desplazar(desplazamientoDer * Time.fixedDeltaTime, Salto);
 
             // Verifica si la velocidad es muy baja para detener completamente el movimiento
-            if (Mathf.Abs(desplazamientoDer) < 0.1f)
+            /*if (Mathf.Abs(desplazamientoDer) < 0.1f)
             {
                 desplazamientoDer = 0f;
-                DesplazarDerecha = false;
+                DesplazarDerecha = false;  
             }
 
             if (Mathf.Abs(desplazamientoIzq) < 0.1f)
             {
                 desplazamientoIzq = 0f;
-                DesplazarIzquierda = false;
-            }
+                DesplazarIzquierda = false;   
+            }*/
         }
 
         if (DesplazarDerecha)
         {
+            Debug.Log("ACTIVADO DER");
             Desplazar(desplazamientoDer * Time.fixedDeltaTime, Salto);
         }
 
+
         if (DesplazarIzquierda)
         {
+            Debug.Log("ACTIVADO IZ");
             Desplazar(desplazamientoIzq * Time.fixedDeltaTime, Salto);
         }
         // Aplicar suavizado cuando no se esté desplazando ni a la izquierda ni a la derecha
@@ -151,27 +172,45 @@ public class Mov_Flechas : MonoBehaviour
     {
         Vector3 velocidadObjetivo = new Vector2(despl, rb2D.velocity.y);
         rb2D.velocity = Vector3.SmoothDamp(rb2D.velocity, velocidadObjetivo, ref velocidad, suavizadoDesplazamiento);
-       
+
         if (despl > 0 && !MirarDer)
         {
+            //animator.SetBool("isJumpingR", false);
             Girar();
+            //Activamos animación
+            animator.enabled = true;
         }
         else if (despl < 0 && MirarDer)
         {
+            //animator.SetBool("isJumpingR", false);
             Girar();
+            //Activamos animación
+            animator.enabled = true;
         }
 
-        if(enSuelo && saltar)
+        if (enSuelo && saltar)
         {
-            enSuelo = false;
             rb2D.AddForce(new Vector2(0f, fuerzaSalto));
+            Debug.Log("Activamos salto animacion");
+            animator.enabled = true;
+            animator.SetBool("isJumpingR", true);
+            //Sonido
+            sonidoCode.Jump();
+            enSuelo = false;
+        }
+        // Desactivar la animación de salto cuando el personaje ya no está en el suelo
+        else if (enSuelo && animator.GetBool("isJumpingR"))
+        {
+            Debug.Log("Desactivamos salto animacion");
+            animator.SetBool("isJumpingR", false);
         }
 
-        if(Mathf.Abs(despl) < velocidadMax)
+
+
+        if (Mathf.Abs(despl) < velocidadMax)
         {
             desplazamientoDer += incrementoVelocidad * Time.fixedDeltaTime;
             desplazamientoIzq -= incrementoVelocidad * Time.fixedDeltaTime;
-
         }
     }
 

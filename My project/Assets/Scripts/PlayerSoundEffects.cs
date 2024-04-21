@@ -5,11 +5,17 @@ using UnityEngine;
 public class PlayerSoundEffects : MonoBehaviour
 {
     [SerializeField] AudioSource src;
-    [SerializeField] AudioClip sfxJump, sfxSlide,sfxDaño;
+    [SerializeField] AudioClip sfxJump, sfxSlide,sfxDaño,sfxCollect;
 
     public void Jump()
     {
         src.clip = sfxJump;
+        src.Play();
+    }
+
+    public void Collect()
+    {
+        src.clip = sfxCollect;
         src.Play();
     }
 
