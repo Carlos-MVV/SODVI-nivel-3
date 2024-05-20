@@ -62,6 +62,15 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Atacar"",
+                    ""type"": ""Button"",
+                    ""id"": ""60b0dd1e-0ecc-4117-a0c4-af63a540e6a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,17 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
                     ""action"": ""Frenar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4db3041-6db1-481a-a1fd-d423c57bf2c4"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Atacar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +140,7 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
         m_Desplazamiento_MovDerecha = m_Desplazamiento.FindAction("MovDerecha", throwIfNotFound: true);
         m_Desplazamiento_MovIzquierda = m_Desplazamiento.FindAction("MovIzquierda", throwIfNotFound: true);
         m_Desplazamiento_Frenar = m_Desplazamiento.FindAction("Frenar", throwIfNotFound: true);
+        m_Desplazamiento_Atacar = m_Desplazamiento.FindAction("Atacar", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +206,7 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
     private readonly InputAction m_Desplazamiento_MovDerecha;
     private readonly InputAction m_Desplazamiento_MovIzquierda;
     private readonly InputAction m_Desplazamiento_Frenar;
+    private readonly InputAction m_Desplazamiento_Atacar;
     public struct DesplazamientoActions
     {
         private @Movimientos m_Wrapper;
@@ -193,6 +215,7 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
         public InputAction @MovDerecha => m_Wrapper.m_Desplazamiento_MovDerecha;
         public InputAction @MovIzquierda => m_Wrapper.m_Desplazamiento_MovIzquierda;
         public InputAction @Frenar => m_Wrapper.m_Desplazamiento_Frenar;
+        public InputAction @Atacar => m_Wrapper.m_Desplazamiento_Atacar;
         public InputActionMap Get() { return m_Wrapper.m_Desplazamiento; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +237,9 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
             @Frenar.started += instance.OnFrenar;
             @Frenar.performed += instance.OnFrenar;
             @Frenar.canceled += instance.OnFrenar;
+            @Atacar.started += instance.OnAtacar;
+            @Atacar.performed += instance.OnAtacar;
+            @Atacar.canceled += instance.OnAtacar;
         }
 
         private void UnregisterCallbacks(IDesplazamientoActions instance)
@@ -230,6 +256,9 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
             @Frenar.started -= instance.OnFrenar;
             @Frenar.performed -= instance.OnFrenar;
             @Frenar.canceled -= instance.OnFrenar;
+            @Atacar.started -= instance.OnAtacar;
+            @Atacar.performed -= instance.OnAtacar;
+            @Atacar.canceled -= instance.OnAtacar;
         }
 
         public void RemoveCallbacks(IDesplazamientoActions instance)
@@ -253,5 +282,6 @@ public partial class @Movimientos: IInputActionCollection2, IDisposable
         void OnMovDerecha(InputAction.CallbackContext context);
         void OnMovIzquierda(InputAction.CallbackContext context);
         void OnFrenar(InputAction.CallbackContext context);
+        void OnAtacar(InputAction.CallbackContext context);
     }
 }

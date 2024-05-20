@@ -8,6 +8,17 @@ public class Atacar : MonoBehaviour
     Stats playerStats;
     public List<GameObject> healthObjects = new List<GameObject>();
     [SerializeField] AudioSource audioSource;
+    [SerializeField] float flashDuration = 0.2f;
+    [SerializeField] Color flashColor = Color.white;
+
+    public SpriteRenderer playerSpriteRenderer;
+    public Color originalColor;
+
+    private void Start()
+    {
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = playerSpriteRenderer.color;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -31,6 +42,29 @@ public class Atacar : MonoBehaviour
                 healthObjects[playerStats.health].SetActive(false);
             }
 
+            // Aplicar efecto visual
+            StartCoroutine(FlashPlayer());
         }
     }
+
+    private IEnumerator FlashPlayer()
+    {
+        // Cambiar color a flashColor
+        playerSpriteRenderer.color = flashColor;
+
+        // Esperar unos segundos
+        yield return new WaitForSeconds(flashDuration);
+
+        // Restaurar el color original
+        playerSpriteRenderer.color = originalColor;
+    }
+
+
+    public void SerGolpeado()
+    {
+        // Realizar acciones cuando el enemigo es golpeado por el jugador
+        // Por ejemplo, desactivar el objeto enemigo
+        gameObject.SetActive(false);
+    }
 }
+

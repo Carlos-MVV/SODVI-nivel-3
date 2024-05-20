@@ -156,7 +156,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.SODVI.Bichosenskating
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
-    Standalone: com.SODVI.Bichos-en-skating
+    Standalone: com.DefaultCompany.com.unity.template.mobile2D
     iPhone: com.DefaultCompany.com.unity.template.mobile2D
     tvOS: com.DefaultCompany.com.unity.template.mobile2D
   buildNumber:

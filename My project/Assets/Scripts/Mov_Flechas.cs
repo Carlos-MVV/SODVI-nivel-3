@@ -30,6 +30,22 @@ public class Mov_Flechas : MonoBehaviour
 
     private bool MirarDer = true;
 
+    [Header("Animations")]
+    public float delayAnim = 1f;
+    public float delayAtackAnim = 1f;
+
+    [Header("Instrucciones")]
+    public float delayInstructions = 3f;
+    public GameObject instructions1;
+    public GameObject instructions2;
+
+
+    [Header("Barrido")]
+    public float duracionAtaque = 1f; // Duración del ataque en segundos
+    public float radioAtaque = 0.5f; // Radio de detección de ataque
+    private bool atacando = false;
+
+
     [Header("Salto")]
 
     public float fuerzaSalto;
@@ -39,10 +55,12 @@ public class Mov_Flechas : MonoBehaviour
     private bool enSuelo;
 
     private Movimientos movimientos;
+    
 
     //Animacion
     [SerializeField] Animator animator;
-    //Sonido
+    [Header("SONIDOS")]
+
     [SerializeField] PlayerSoundEffects sonidoCode;
 
 
@@ -105,29 +123,48 @@ public class Mov_Flechas : MonoBehaviour
             Salto = true;
         }
 
+        if (movimientos.Desplazamiento.Atacar.triggered && !atacando)//Input.GetButtonDown(""))
+        {
+            ActivarAtaque();
+        }
+
 
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            ActivarImpacto();
+        }
+
+    }    
+
 
     private void FixedUpdate()
     {
         if (Frenar)
         {
-            animator.enabled = true;
-            animator.SetBool("isStoping", true);
-            Debug.Log("Frenando");
+            instructions2.SetActive(false);
 
+            
+            Debug.Log("Frenando");
+            
             // Mathf.Lerp: Esta función suaviza la transición entre la velocidad actual y cero, con la velocidad de frenado definida por suavizadoDesplazamiento
             desplazamientoDer = Mathf.Lerp(desplazamientoDer, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
             DesplazarDerecha = false;
             Debug.Log("DETENIDO DER");
-            animator.SetBool("isStoping", false);
+            animator.SetBool("isStoping", true);
 
             desplazamientoIzq = Mathf.Lerp(desplazamientoIzq, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
             DesplazarIzquierda = false;
             Debug.Log("DETENIDO IZ");
-            animator.SetBool("isStoping", false);
+            animator.SetBool("isStoping", true);
+            
+
 
             Desplazar(desplazamientoDer * Time.fixedDeltaTime, Salto);
+
+            
 
             // Verifica si la velocidad es muy baja para detener completamente el movimiento
             /*if (Mathf.Abs(desplazamientoDer) < 0.1f)
@@ -145,15 +182,29 @@ public class Mov_Flechas : MonoBehaviour
 
         if (DesplazarDerecha)
         {
+            animator.SetBool("isStoping", false);
             Debug.Log("ACTIVADO DER");
             Desplazar(desplazamientoDer * Time.fixedDeltaTime, Salto);
+            instructions1.SetActive(false);
+            // Invoca el método para mostrar las siguientes instrucciones después de un retraso
+            if (!instructions2.activeSelf)
+            {
+                Invoke("ShowNextInstructions", delayInstructions);
+            }
         }
 
 
         if (DesplazarIzquierda)
         {
+            animator.SetBool("isStoping", false);
             Debug.Log("ACTIVADO IZ");
             Desplazar(desplazamientoIzq * Time.fixedDeltaTime, Salto);
+            instructions1.SetActive(false);
+            // Invoca el método para mostrar las siguientes instrucciones después de un retraso
+            if (!instructions2.activeSelf)
+            {
+                Invoke("ShowNextInstructions", delayInstructions);
+            }
         }
         // Aplicar suavizado cuando no se esté desplazando ni a la izquierda ni a la derecha
       /*  if (!DesplazarDerecha && !DesplazarIzquierda)
@@ -191,8 +242,9 @@ public class Mov_Flechas : MonoBehaviour
         if (enSuelo && saltar)
         {
             rb2D.AddForce(new Vector2(0f, fuerzaSalto));
+            //Animacion
             Debug.Log("Activamos salto animacion");
-            animator.enabled = true;
+            //animator.enabled = true;
             animator.SetBool("isJumpingR", true);
             //Sonido
             sonidoCode.Jump();
@@ -202,7 +254,8 @@ public class Mov_Flechas : MonoBehaviour
         else if (enSuelo && animator.GetBool("isJumpingR"))
         {
             Debug.Log("Desactivamos salto animacion");
-            animator.SetBool("isJumpingR", false);
+            Invoke("JumpAnimation", delayAnim);
+            
         }
 
 
@@ -214,6 +267,74 @@ public class Mov_Flechas : MonoBehaviour
         }
     }
 
+
+    //CORUTINA DE ATAQUE BARRIDO
+
+    public void ActivarAtaque()
+    {
+        // Iniciar la corutina para manejar el impacto
+        StartCoroutine(AtaqueCorutina());
+    }
+
+    IEnumerator AtaqueCorutina()
+    {
+        atacando = true;
+        Debug.Log("ATACANDO");
+        // Detectar enemigos en el radio de ataque y eliminarlos
+        Collider2D[] enemigos = Physics2D.OverlapCircleAll(transform.position, radioAtaque);
+        foreach (Collider2D enemy in enemigos)
+        {
+            if (enemy.CompareTag("Enemy"))
+            {
+                Debug.Log("Enemigo Detectado");
+                enemy.GetComponent<Atacar>().SerGolpeado();
+            }
+        }
+
+        // Iniciar animación de ataque 
+        animator.SetBool("isAttacking", true);
+
+        // Esperar por 0.5 segundos (puedes ajustar este valor)
+        yield return new WaitForSeconds(0.9f);
+
+        animator.SetBool("isAttacking", false);
+        atacando = false;
+    }
+
+
+    //CORUTINA DE IMPACTO CHOQUE
+
+    public void ActivarImpacto()
+    {
+        // Iniciar la corutina para manejar el impacto
+        StartCoroutine(ImpactoCorutina());
+    }
+
+    IEnumerator ImpactoCorutina()
+    {
+        // Activar la animación de impacto
+        animator.SetBool("isCrashing", true);
+
+        // Esperar por 0.5 segundos (puedes ajustar este valor)
+        yield return new WaitForSeconds(0.5f);
+
+        // Desactivar la animación de impacto
+        animator.SetBool("isCrashing", false);
+    }
+
+
+
+    private void JumpAnimation()
+    {
+        animator.SetBool("isJumpingR", false);
+    }
+
+
+    private void ShowNextInstructions()
+    {
+        instructions2.SetActive(true);
+    }
+
     private void Girar()
     {
         MirarDer = !MirarDer;
@@ -222,9 +343,13 @@ public class Mov_Flechas : MonoBehaviour
         transform.localScale = escala;
     }
 
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(DetectorSuelo.position, tamañoDetector);
+        Gizmos.DrawWireSphere(transform.position, radioAtaque);
     }
+
 }
