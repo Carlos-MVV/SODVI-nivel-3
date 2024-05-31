@@ -33,6 +33,7 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         audioSourceButton.Play();
+        gm.lastCheckPointPos = new Vector2(0, 0);
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
     }

@@ -10,6 +10,26 @@ public class GameMaster : MonoBehaviour
     public int score = 0;
     public UIController puntajeSystem; // Referencia al script UIController
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void Start()
+    {
+        if (puntajeSystem != null)
+        {
+            puntajeSystem.ActualizarPuntos(score);
+        }
+    }
 
     public void IncrementarPuntos(int cantidad)
     {
@@ -25,17 +45,14 @@ public class GameMaster : MonoBehaviour
         if (puntajeSystem != null)
             puntajeSystem.ActualizarPuntos(score); // Actualizar el texto en la UI
     }
-    // Start is called before the first frame update
-    void Awake()
+
+    public void ActualizarUI()
     {
-        if (instance == null)
+        if (puntajeSystem != null)
         {
-            instance = this;
-           // DontDestroyOnLoad(instance);
-        }
-        else
-        {
-            Destroy(gameObject);
+            puntajeSystem.ActualizarPuntos(score);
         }
     }
+    // Start is called before the first frame update
+
 }

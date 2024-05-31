@@ -5,6 +5,7 @@ using UnityEngine;
 public class DeathZone : MonoBehaviour
 {
     Stats playerStats;
+    public List<GameObject> healthObjects = new List<GameObject>();
 
     // Update is called once per frame
 
@@ -12,6 +13,12 @@ public class DeathZone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         playerStats = collision.gameObject.GetComponent<Stats>();
-        playerStats.health = 0;
+        playerStats.health = playerStats.health - 1;
+        if (playerStats.health >= 0 && playerStats.health < healthObjects.Count)
+        {
+            healthObjects[playerStats.health].SetActive(false);
+        }
+
+       playerStats.respawn();
     }
 }

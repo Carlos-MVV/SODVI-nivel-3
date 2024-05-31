@@ -10,7 +10,7 @@ public class UIController : MonoBehaviour
     // Método para actualizar el texto con los puntos acumulados
     public void ActualizarPuntos(int score)
     {
-        if (puntajeText != null)
-            puntajeText.text = "Puntaje: " + score.ToString(); // Actualiza el texto con la cantidad de puntos // Actualiza el texto con la cantidad de puntos    }
+        //if (puntajeText != null)
+        puntajeText.text = "Puntaje: " + score.ToString(); // Actualiza el texto con la cantidad de puntos // Actualiza el texto con la cantidad de puntos    }
     }
 }

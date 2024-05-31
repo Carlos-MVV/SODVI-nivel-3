@@ -26,7 +26,7 @@ public class Mov_Flechas : MonoBehaviour
     private bool Salto = false;
     private bool DesplazarDerecha = false;
     private bool DesplazarIzquierda = false;
-    private bool Frenar = false;
+    public bool Frenar = false;
 
     private bool MirarDer = true;
 
@@ -37,7 +37,7 @@ public class Mov_Flechas : MonoBehaviour
     [Header("Instrucciones")]
     public float delayInstructions = 3f;
     public GameObject instructions1;
-    public GameObject instructions2;
+    //public GameObject instructions2;
 
 
     [Header("Barrido")]
@@ -137,6 +137,15 @@ public class Mov_Flechas : MonoBehaviour
             ActivarImpacto();
         }
 
+        if (collision.gameObject.tag == "Rampa")
+        {
+            ActivarSubida();
+        }
+        if (collision.gameObject.tag == "DeathZone")
+        {
+            Frenar = true;
+        }
+
     }    
 
 
@@ -144,7 +153,7 @@ public class Mov_Flechas : MonoBehaviour
     {
         if (Frenar)
         {
-            instructions2.SetActive(false);
+            //instructions2.SetActive(false);
 
             
             Debug.Log("Frenando");
@@ -187,10 +196,10 @@ public class Mov_Flechas : MonoBehaviour
             Desplazar(desplazamientoDer * Time.fixedDeltaTime, Salto);
             instructions1.SetActive(false);
             // Invoca el método para mostrar las siguientes instrucciones después de un retraso
-            if (!instructions2.activeSelf)
+           /* if (!instructions2.activeSelf)
             {
                 Invoke("ShowNextInstructions", delayInstructions);
-            }
+            }*/
         }
 
 
@@ -201,18 +210,18 @@ public class Mov_Flechas : MonoBehaviour
             Desplazar(desplazamientoIzq * Time.fixedDeltaTime, Salto);
             instructions1.SetActive(false);
             // Invoca el método para mostrar las siguientes instrucciones después de un retraso
-            if (!instructions2.activeSelf)
+            /*if (!instructions2.activeSelf)
             {
                 Invoke("ShowNextInstructions", delayInstructions);
-            }
+            }*/
         }
         // Aplicar suavizado cuando no se esté desplazando ni a la izquierda ni a la derecha
-      /*  if (!DesplazarDerecha && !DesplazarIzquierda)
-        {
-            desplazamientoDer = Mathf.Lerp(desplazamientoDer, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
-            desplazamientoIzq = Mathf.Lerp(desplazamientoIzq, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
-            
-        }*/
+        /*  if (!DesplazarDerecha && !DesplazarIzquierda)
+          {
+              desplazamientoDer = Mathf.Lerp(desplazamientoDer, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
+              desplazamientoIzq = Mathf.Lerp(desplazamientoIzq, 0f, suavizadoDesplazamiento * Time.fixedDeltaTime);
+
+          }*/
 
         enSuelo = Physics2D.OverlapBox(DetectorSuelo.position, tamañoDetector, 0f, esSuelo);
         Salto = false;
@@ -322,18 +331,37 @@ public class Mov_Flechas : MonoBehaviour
         animator.SetBool("isCrashing", false);
     }
 
+    //CORUTINA DE SUBIDA RAMPAS
 
+    public void ActivarSubida()
+    {
+        // Iniciar la corutina para manejar el impacto
+        StartCoroutine(SubidaCorutina());
+    }
+
+    IEnumerator SubidaCorutina()
+    {
+        // Activar la animación de impacto
+        animator.SetBool("isGoUp", true);
+
+        // Esperar por 0.5 segundos (puedes ajustar este valor)
+        yield return new WaitForSeconds(0.6f);
+
+        // Desactivar la animación de impacto
+        animator.SetBool("isGoUp", false);
+    }
 
     private void JumpAnimation()
     {
         animator.SetBool("isJumpingR", false);
     }
 
-
+    /*
     private void ShowNextInstructions()
     {
         instructions2.SetActive(true);
     }
+    */
 
     private void Girar()
     {
