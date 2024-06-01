@@ -5,9 +5,13 @@
 **Integrantes:**
 
 Carlos Villaseñor - Manager
+
 Javier Diaz - Músico
+
 Jorge Gutierrez- Artista
+
 Fernando Tenorio - Coder
+
 
 **Semestre:** 2024-2
 
@@ -50,11 +54,11 @@ Proceso de trabajo:
 
 ![image](https://github.com/Carlos-MVV/SODVI-nivel-3/assets/92966348/2b2789ac-e1f3-4b20-b832-57b1cc118b5f)
 
-(Diseño tutorial)
+(Diseño tutorial el el laboratorio de SODVI)
 
 ![image](https://github.com/Carlos-MVV/SODVI-nivel-3/assets/92966348/5d99b8a5-bf03-4116-8ab2-87b73f770ec9)
 
-(Diseño tercer nivel)
+(Diseño tercer nivel usando Paint)
 
 
 
@@ -63,16 +67,5 @@ Proceso de trabajo:
 
 Para finalizar, cada miembro del equipo presentará una conclusión que resumirá los logros y aprendizajes obtenidos durante el desarrollo de este proyecto.
 
-Villaseñor Venegas Carlos Miguel:
+Villaseñor Venegas Carlos Miguel: En este proyecto se pudo cumplir con el objetivo propuesto, dejando solo algunos detalles pendientes. Aunque hay aspectos a mejorar, estoy satisfecho con el resultado y con como se llevó a cabo. Los principales aprendizajes  fueron entender la importancia de un análisis de tiempos y riesgos en un proyecto, el manejo de herrmientas de desarrollo de proyectos como GitHub, y Trello, y entender la importancia de estar en constante comunicación con todas las partes del proyecto.
 
-<!-- Cuando entregues tu documentación, por favor, borra todo lo que esté debajo. -->
-<div align="center">
-<br>
-<br>
-<br>
-<br>
-<p align="center">
-  <img src="rexLogo.png" alt="Logo de Fernando Rosas" width="100"/>
-</p>
-<h3 align="center">Documentado por Fernando Rosas</h3>
-</div>
