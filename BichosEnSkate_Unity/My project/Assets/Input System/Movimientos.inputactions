@@ -1,0 +1,114 @@
+{
+    "name": "Movimientos",
+    "maps": [
+        {
+            "name": "Desplazamiento",
+            "id": "d1b53061-46f4-4bfc-bed5-f4b9fae0bfb1",
+            "actions": [
+                {
+                    "name": "Saltar",
+                    "type": "PassThrough",
+                    "id": "283b7932-60d0-4ee9-875f-edad7db9cc1c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MovDerecha",
+                    "type": "PassThrough",
+                    "id": "93c81d65-3649-427d-a08c-9c0ab29bc078",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MovIzquierda",
+                    "type": "PassThrough",
+                    "id": "c6769438-39b0-471a-8e6f-24c5e55134fc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Frenar",
+                    "type": "PassThrough",
+                    "id": "4212b2fb-127d-40f2-8ccc-8c06b27a5f8d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Atacar",
+                    "type": "Button",
+                    "id": "60b0dd1e-0ecc-4117-a0c4-af63a540e6a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a68b8785-76fa-456f-8eb5-3343fe9bf69b",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovDerecha",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e04ee855-8d14-46d6-a795-6084f08e460b",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovIzquierda",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9177003e-658a-4001-9017-b0d00c6b1bfe",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Saltar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7dd922ad-49d7-40f7-8a5a-fd1886237117",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Frenar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4db3041-6db1-481a-a1fd-d423c57bf2c4",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Atacar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
